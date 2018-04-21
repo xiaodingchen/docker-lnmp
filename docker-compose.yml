@@ -1,0 +1,36 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:5.7
+    environment: 
+      MYSQL_ROOT_PASSWORD: "root"
+    volumes:
+      - “/var/lib/mysql”
+    ports:
+      - "6306:3306"
+  redis:
+    image: redis:4.0.2
+    ports:
+      - "6999:6379"
+  php:
+    build: 
+      context: ./services/php
+      dockerfile: Dockerfile
+    volumes:
+      - ./app:/www/html/app
+    ports:
+      - "9090:9000"
+  nginx:
+    image: nginx:1.12.2
+    ports:
+      - "8000:80"
+    depends_on:
+      - php
+    volumes:
+      - ./services/nginx/config:/etc/nginx/conf.d
+      - ./services/nginx/logs:/etc/nginx/logs/
+      - ./app:/www/html/app
+
+#networks:
+
+#volumes:
