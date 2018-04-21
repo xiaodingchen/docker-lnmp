@@ -4,8 +4,11 @@ services:
     image: mysql:5.7
     environment: 
       MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "app"
+      MYSQL_USER: "app"
+      MYSQL_PASSWORD: "123456"
     volumes:
-      - “/var/lib/mysql”
+      - ./services/mysql/data:/var/lib/mysql
     ports:
       - "6306:3306"
   redis:
@@ -31,6 +34,6 @@ services:
       - ./services/nginx/logs:/etc/nginx/logs/
       - ./app:/www/html/app
 
-#networks:
-
-#volumes:
+volumes:
+ mysql:
+   driver: local

@@ -1,2 +1,4 @@
 .*
 !.env
+services/mysql/data/
+services/nginx/logs/
